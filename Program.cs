@@ -7,7 +7,7 @@ string path = Directory.GetCurrentDirectory() + "//nlog.config";
 
 // create instance of Logger
 var logger = LogManager.Setup().LoadConfigurationFromFile(path).GetCurrentClassLogger();
-
+Console.Clear();
 logger.Info("Program started");
 
 do
@@ -40,7 +40,12 @@ do
     }
     else if (choice == "2")
     {
-        // Add category
+        Category category = new();
+    Console.WriteLine("Enter Category Name:");
+    category.CategoryName = Console.ReadLine()!;
+    Console.WriteLine("Enter the Category Description:");
+    category.Description = Console.ReadLine();
+    // TODO: save category to db
     }
     else if (String.IsNullOrEmpty(choice))
     {
