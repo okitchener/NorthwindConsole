@@ -89,7 +89,9 @@ else if (choice == "3")
     Console.ForegroundColor = ConsoleColor.White;
     int id = int.Parse(Console.ReadLine()!);
     Console.Clear();
-    logger.Info($"CategoryId {id} selected");
+        logger.Info($"CategoryId {id} selected");
+    Category category = db.Categories.FirstOrDefault(c => c.CategoryId == id)!;
+    Console.WriteLine($"{category.CategoryName} - {category.Description}");
   }
     else if (String.IsNullOrEmpty(choice))
     {
