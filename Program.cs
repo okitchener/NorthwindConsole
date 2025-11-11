@@ -90,11 +90,11 @@ else if (choice == "3")
     int id = int.Parse(Console.ReadLine()!);
     Console.Clear();
         logger.Info($"CategoryId {id} selected");
-    Category category = db.Categories.FirstOrDefault(c => c.CategoryId == id)!;
+        Category category = db.Categories.Include("Products").FirstOrDefault(c => c.CategoryId == id)!;
         Console.WriteLine($"{category.CategoryName} - {category.Description}");
      foreach (Product p in category.Products)
     {
-      Console.WriteLine(p.ProductName);
+      Console.WriteLine($"\t{p.ProductName}");
     }
   }
     else if (String.IsNullOrEmpty(choice))
