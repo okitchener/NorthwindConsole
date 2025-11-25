@@ -114,8 +114,23 @@ do
     }
     else if (choice == "5")
     {
-    //Future add product code here
-  }
+        Product product = new();
+        Console.WriteLine("Enter Product Name:");
+        product.ProductName = Console.ReadLine()!;
+        Console.WriteLine("Enter Unit Price:");
+        product.UnitPrice = decimal.Parse(Console.ReadLine()!);
+        Console.WriteLine("Enter Units In Stock:");
+        product.UnitsInStock = short.Parse(Console.ReadLine()!);
+        ValidationContext context = new ValidationContext(product, null, null);
+        List<ValidationResult> results = new List<ValidationResult>();
+
+        var isValid = Validator.TryValidateObject(product, context, results, true);
+        if (isValid)
+        {
+            var db = new DataContext();
+            logger.Info("Validation passed");
+        }
+    }
     else if (String.IsNullOrEmpty(choice))
     {
         break;
