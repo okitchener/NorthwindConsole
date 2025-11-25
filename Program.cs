@@ -163,7 +163,11 @@ do
             else
             {
                 logger.Info("Validation passed");
-                // TODO: save product to db
+                // Save product to database
+                db.Products.Add(product);
+                db.SaveChanges();
+                logger.Info($"Product saved: {product.ProductId} - {product.ProductName}");
+                Console.WriteLine($"Product '{product.ProductName}' saved successfully with ID: {product.ProductId}");
             }
         }
         if (!isValid)
