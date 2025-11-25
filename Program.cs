@@ -17,6 +17,7 @@ do
     Console.WriteLine("2) Add category");
     Console.WriteLine("3) Display Category and related products");
      Console.WriteLine("4) Display all Categories and their related products");
+    Console.WriteLine("5) Add Product");
     Console.WriteLine("Enter to quit");
     string? choice = Console.ReadLine();
     Console.Clear();
@@ -98,18 +99,22 @@ do
             Console.WriteLine($"\t{p.ProductName}");
         }
     }
-else if (choice == "4")
-  {
-    var db = new DataContext();
-    var query = db.Categories.Include("Products").OrderBy(p => p.CategoryId);
-    foreach (var item in query)
+    else if (choice == "4")
     {
-      Console.WriteLine($"{item.CategoryName}");
-      foreach (Product p in item.Products)
-      {
-        Console.WriteLine($"\t{p.ProductName}");
-      }
+        var db = new DataContext();
+        var query = db.Categories.Include("Products").OrderBy(p => p.CategoryId);
+        foreach (var item in query)
+        {
+            Console.WriteLine($"{item.CategoryName}");
+            foreach (Product p in item.Products)
+            {
+                Console.WriteLine($"\t{p.ProductName}");
+            }
+        }
     }
+    else if (choice == "5")
+    {
+    //Future add product code here
   }
     else if (String.IsNullOrEmpty(choice))
     {
