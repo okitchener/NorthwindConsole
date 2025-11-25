@@ -140,7 +140,17 @@ do
         ValidationContext context = new ValidationContext(product, null, null);
         List<ValidationResult> results = new List<ValidationResult>();
 
+        // Check for empty product name
+        if (string.IsNullOrWhiteSpace(product.ProductName))
+        {
+            results.Add(new ValidationResult("Product name cannot be empty", ["ProductName"]));
+        }
+
         var isValid = Validator.TryValidateObject(product, context, results, true);
+        
+        // Override isValid if we have any validation results (including our custom ones)
+        isValid = results.Count == 0;
+        
         if (isValid)
         {
             // check for unique name
@@ -161,6 +171,7 @@ do
             foreach (var result in results)
             {
                 logger.Error($"{result.MemberNames.First()} : {result.ErrorMessage}");
+                Console.WriteLine($"Error: {result.ErrorMessage}");
             }
         }
     }
