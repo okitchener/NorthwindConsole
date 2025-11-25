@@ -143,7 +143,25 @@ do
         var isValid = Validator.TryValidateObject(product, context, results, true);
         if (isValid)
         {
-            logger.Info("Validation passed");
+            // check for unique name
+            if (db.Products.Any(p => p.ProductName == product.ProductName))
+            {
+                // generate validation error
+                isValid = false;
+                results.Add(new ValidationResult("Product name exists", ["ProductName"]));
+            }
+            else
+            {
+                logger.Info("Validation passed");
+                // TODO: save product to db
+            }
+        }
+        if (!isValid)
+        {
+            foreach (var result in results)
+            {
+                logger.Error($"{result.MemberNames.First()} : {result.ErrorMessage}");
+            }
         }
     }
     else if (String.IsNullOrEmpty(choice))
