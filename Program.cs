@@ -114,20 +114,35 @@ do
     }
     else if (choice == "5")
     {
+        var db = new DataContext();
         Product product = new();
         Console.WriteLine("Enter Product Name:");
         product.ProductName = Console.ReadLine()!;
+        
+        // Display categories for selection
+        var categories = db.Categories.OrderBy(c => c.CategoryId);
+        Console.WriteLine("Select a category for the product:");
+        Console.ForegroundColor = ConsoleColor.DarkRed;
+        foreach (var cat in categories)
+        {
+            Console.WriteLine($"{cat.CategoryId}) {cat.CategoryName}");
+        }
+        Console.ForegroundColor = ConsoleColor.White;
+        int categoryId = int.Parse(Console.ReadLine()!);
+        product.CategoryId = categoryId;
+        logger.Info($"CategoryId {categoryId} selected for product");
+        
         Console.WriteLine("Enter Unit Price:");
         product.UnitPrice = decimal.Parse(Console.ReadLine()!);
         Console.WriteLine("Enter Units In Stock:");
         product.UnitsInStock = short.Parse(Console.ReadLine()!);
+        
         ValidationContext context = new ValidationContext(product, null, null);
         List<ValidationResult> results = new List<ValidationResult>();
 
         var isValid = Validator.TryValidateObject(product, context, results, true);
         if (isValid)
         {
-            var db = new DataContext();
             logger.Info("Validation passed");
         }
     }
