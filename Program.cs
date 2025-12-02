@@ -221,8 +221,18 @@ do
 
          // Find the product
         Product? product = db.Products.FirstOrDefault(p => p.ProductId == productId);
-         Console.Clear();
+         if (product == null)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Product with ID {productId} not found.");
+            Console.ForegroundColor = ConsoleColor.White;
+            logger.Error($"Product with ID {productId} not found");
+        }
+        else
+        {
+            Console.Clear();
             logger.Info($"Product {productId} - {product.ProductName} selected for editing");
+
 
         Console.WriteLine($"Editing Product: {product.ProductName}");
         Console.WriteLine("Choose Product Record to edit");
@@ -232,6 +242,7 @@ do
         Console.WriteLine("4) Discontinued status");
         string? editChoice = Console.ReadLine();
         Console.Clear();
+    }
     }
     }
     else if (mainChoice == "3")
