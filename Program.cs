@@ -212,7 +212,7 @@ do
         Console.ForegroundColor = ConsoleColor.Cyan;
         foreach (var p in products)
         {
-            Console.WriteLine($"{p.ProductId}) {p.ProductName} - Price: {p.UnitPrice:C}, Stock: {p.UnitsInStock}");
+            Console.WriteLine($"{p.ProductId}) {p.ProductName} - Price: {p.UnitPrice:C}, Stock: {p.UnitsInStock}, Discontinued: {p.Discontinued}");
         }
         Console.ForegroundColor = ConsoleColor.White;
         
@@ -240,8 +240,52 @@ do
         Console.WriteLine("2) Unit Price");
         Console.WriteLine("3) Units In Stock");
         Console.WriteLine("4) Discontinued status");
+        Console.WriteLine("Enter to return to Products menu");
         string? editChoice = Console.ReadLine();
         Console.Clear();
+        if (editChoice == "1")
+        {
+            //Edit Product Name
+            Console.WriteLine($"Current Product Name: {product.ProductName}");
+            Console.Write("Enter new Product Name: ");
+            string? newName = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(newName))
+            {
+                product.ProductName = newName;
+            }
+        }
+        else if (editChoice == "2")
+        {   
+            //Edit Unit Price
+            Console.WriteLine($"Current Unit Price: {product.UnitPrice:C}");
+            Console.Write("Enter new Unit Price: ");
+            decimal newPrice = decimal.Parse(Console.ReadLine()!);
+            product.UnitPrice = newPrice;
+        }
+        else if (editChoice == "3")
+        {
+            //Edit Units In Stock
+            Console.WriteLine($"Current Units In Stock: {product.UnitsInStock}");
+            Console.Write("Enter new Units In Stock: ");
+            short newStock = short.Parse(Console.ReadLine()!);
+            product.UnitsInStock = newStock;
+        }
+        else if (editChoice == "4")
+        {
+            //Edit Discontinued Status
+            Console.WriteLine($"Current Discontinued Status: {product.Discontinued}");
+            Console.Write("Set product discontinued? (t/f): ");
+              string? discontinuedInput = Console.ReadLine();
+             if (!string.IsNullOrWhiteSpace(discontinuedInput))
+                {
+                    bool newDiscontinued = discontinuedInput.ToLower() == "t" || discontinuedInput.ToLower() == "true";
+                    product.Discontinued = newDiscontinued;
+
+        }
+
+
+
+        }
     }
     }
     }
