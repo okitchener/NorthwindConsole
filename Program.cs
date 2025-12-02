@@ -204,13 +204,28 @@ do
     else if (choice == "2")
     {
         // Edit Product Record
-        Console.WriteLine("Choose Product Record to edit");
-        Console.WriteLine("1) Product name");
-        Console.WriteLine("2) Unit Price");
-        Console.WriteLine("3) Units In Stock");
-        Console.WriteLine("4) Discontinued status");
-        string? editChoice = Console.ReadLine();
-        Console.Clear();
+        var db = new DataContext();
+
+        // Displaying products for selection
+        var products = db.Products.OrderBy(p => p.ProductId);
+        Console.WriteLine("Select a product to edit:");
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        foreach (var p in products)
+        {
+            Console.WriteLine($"{p.ProductId}) {p.ProductName} - Price: {p.UnitPrice:C}, Stock: {p.UnitsInStock}");
+        }
+        Console.ForegroundColor = ConsoleColor.White;
+        
+        Console.Write("\nEnter Product ID: ");
+        int productId = int.Parse(Console.ReadLine()!);
+
+        // Console.WriteLine("Choose Product Record to edit");
+        // Console.WriteLine("1) Product name");
+        // Console.WriteLine("2) Unit Price");
+        // Console.WriteLine("3) Units In Stock");
+        // Console.WriteLine("4) Discontinued status");
+        // string? editChoice = Console.ReadLine();
+        // Console.Clear();
     }
     }
     else if (mainChoice == "3")
