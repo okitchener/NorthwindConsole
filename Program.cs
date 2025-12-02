@@ -203,7 +203,15 @@ do
     }
     else if (choice == "2")
     {
-        // Future Edit Product Record here
+        // Edit Product Record
+        Console.WriteLine("Choose Product Record to edit");
+        Console.WriteLine("1) Product name");
+        Console.WriteLine("2) Unit Price");
+        Console.WriteLine("3) Units In Stock");
+        Console.WriteLine("4) Discontinued status");
+        string? editChoice = Console.ReadLine();
+        Console.Clear();
+    }
     }
     else if (mainChoice == "3")
     {
