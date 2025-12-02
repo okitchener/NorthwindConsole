@@ -276,34 +276,74 @@ do
             //Edit Unit Price
             Console.WriteLine($"Current Unit Price: {product.UnitPrice:C}");
             Console.Write("Enter new Unit Price: ");
-            decimal newPrice = decimal.Parse(Console.ReadLine()!);
-            product.UnitPrice = newPrice;
+            string? newPriceInput = Console.ReadLine();
+               
+                if (!string.IsNullOrWhiteSpace(newPriceInput) && decimal.TryParse(newPriceInput, out decimal newPrice))
+                {
+                    product.UnitPrice = newPrice;
+                    db.SaveChanges();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"Unit Price updated to {newPrice:C} successfully!");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    logger.Info($"Product {productId} price updated to {newPrice:C}");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Error: Invalid price format.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+
         }
         else if (editChoice == "3")
         {
             //Edit Units In Stock
             Console.WriteLine($"Current Units In Stock: {product.UnitsInStock}");
             Console.Write("Enter new Units In Stock: ");
-            short newStock = short.Parse(Console.ReadLine()!);
-            product.UnitsInStock = newStock;
+             string? newStockInput = Console.ReadLine();
+               
+                if (!string.IsNullOrWhiteSpace(newStockInput) && short.TryParse(newStockInput, out short newStock))
+                {
+                    product.UnitsInStock = newStock;
+                    db.SaveChanges();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"Units In Stock updated to {newStock} successfully!");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    logger.Info($"Product {productId} stock updated to {newStock}");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Error: Invalid stock quantity format.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+
         }
         else if (editChoice == "4")
         {
             //Edit Discontinued Status
             Console.WriteLine($"Current Discontinued Status: {product.Discontinued}");
-            Console.Write("Set product discontinued? (t/f): ");
-              string? discontinuedInput = Console.ReadLine();
-             if (!string.IsNullOrWhiteSpace(discontinuedInput))
+         Console.Write("Set as discontinued? (y/n): ");
+                string? discontinuedInput = Console.ReadLine();
+               
+                if (!string.IsNullOrWhiteSpace(discontinuedInput))
                 {
-                    bool newDiscontinued = discontinuedInput.ToLower() == "t" || discontinuedInput.ToLower() == "true";
+                    bool newDiscontinued = discontinuedInput.ToLower() == "y" || discontinuedInput.ToLower() == "yes";
                     product.Discontinued = newDiscontinued;
-
-        }
-
-
-
+                    db.SaveChanges();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"Discontinued status updated to {newDiscontinued} successfully!");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    logger.Info($"Product {productId} discontinued status updated to {newDiscontinued}");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Error: Invalid input for discontinued status.");
+                    Console.ForegroundColor = ConsoleColor.White;
         }
     }
+        }
     }
     }
     else if (mainChoice == "3")
