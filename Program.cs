@@ -219,13 +219,19 @@ do
         Console.Write("\nEnter Product ID: ");
         int productId = int.Parse(Console.ReadLine()!);
 
-        // Console.WriteLine("Choose Product Record to edit");
-        // Console.WriteLine("1) Product name");
-        // Console.WriteLine("2) Unit Price");
-        // Console.WriteLine("3) Units In Stock");
-        // Console.WriteLine("4) Discontinued status");
-        // string? editChoice = Console.ReadLine();
-        // Console.Clear();
+         // Find the product
+        Product? product = db.Products.FirstOrDefault(p => p.ProductId == productId);
+         Console.Clear();
+            logger.Info($"Product {productId} - {product.ProductName} selected for editing");
+
+        Console.WriteLine($"Editing Product: {product.ProductName}");
+        Console.WriteLine("Choose Product Record to edit");
+        Console.WriteLine("1) Product name");
+        Console.WriteLine("2) Unit Price");
+        Console.WriteLine("3) Units In Stock");
+        Console.WriteLine("4) Discontinued status");
+        string? editChoice = Console.ReadLine();
+        Console.Clear();
     }
     }
     else if (mainChoice == "3")
