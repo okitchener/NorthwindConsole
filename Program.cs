@@ -128,6 +128,7 @@ do
         // Products submenu
         Console.WriteLine("Products Menu:");
         Console.WriteLine("1) Add Product");
+        Console.WriteLine("2) Edit Product Record");
         Console.WriteLine("Enter to return to main menu");
         string? choice = Console.ReadLine();
         Console.Clear();
@@ -200,6 +201,9 @@ do
             }
         }
     }
+    else if (choice == "2")
+    {
+        // Future Edit Product Record here
     }
     else if (mainChoice == "3")
     {
