@@ -249,10 +249,27 @@ do
             Console.WriteLine($"Current Product Name: {product.ProductName}");
             Console.Write("Enter new Product Name: ");
             string? newName = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(newName))
-            {
-                product.ProductName = newName;
-            }
+              if (!string.IsNullOrWhiteSpace(newName))
+                {
+                    // Check for unique name
+                    if (db.Products.Any(p => p.ProductName == newName && p.ProductId != productId))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Error: Product name already exists.");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        logger.Error($"Product name '{newName}' already exists");
+                    }
+                    else
+                    {
+                        product.ProductName = newName;
+                        db.SaveChanges();
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"Product name updated to '{newName}' successfully!");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        logger.Info($"Product {productId} name updated to '{newName}'");
+                    }
+                }
+
         }
         else if (editChoice == "2")
         {   
