@@ -129,7 +129,8 @@ do
         Console.WriteLine("Products Menu:");
         Console.WriteLine("1) Add Product");
         Console.WriteLine("2) Edit Product Record");
-        Console.WriteLine("3) Display products");
+        Console.WriteLine("3) Display Products");
+        Console.WriteLine("4) Display a Specific Product");
         Console.WriteLine("Enter to return to main menu");
         string? choice = Console.ReadLine();
         Console.Clear();
@@ -417,7 +418,11 @@ do
             // Return to Products menu
         }
     }
+    else if (choice == "4")
+    {
+        // Future Display a Specific Product here
     }
+    } 
     else if (mainChoice == "3")
     {
         // Delete submenu
