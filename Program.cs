@@ -423,15 +423,37 @@ do
         //choose a Specific Product to display
         var db = new DataContext();
         var products = db.Products.OrderBy(p => p.ProductId);
-        Console.ForegroundColor = ConsoleColor.Cyan;
         foreach (var p in products)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"{p.ProductId}) {p.ProductName}");
         }
         Console.WriteLine("Enter the Product ID to display:");
         int productId = int.Parse(Console.ReadLine()!);
 
-        
+        //display all records of selected product
+        Product? product = db.Products.FirstOrDefault(p => p.ProductId == productId);
+         if (product == null)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Product with ID {productId} not found.");
+            Console.ForegroundColor = ConsoleColor.White;
+            logger.Error($"Product with ID {productId} not found");
+        }
+        else
+        {
+            Console.Clear();
+            logger.Info($"Product {productId} - {product.ProductName} selected for display");
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Product ID: {product.ProductId}");
+            Console.WriteLine($"Product Name: {product.ProductName}");
+            Console.WriteLine($"Category ID: {product.CategoryId}");
+            Console.WriteLine($"Unit Price: {product.UnitPrice:C}");
+            Console.WriteLine($"Units In Stock: {product.UnitsInStock}");
+            Console.WriteLine($"Discontinued: {product.Discontinued}");
+            Console.ForegroundColor = ConsoleColor.White;
+    }
     }
     } 
     else if (mainChoice == "3")
