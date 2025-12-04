@@ -356,9 +356,35 @@ do
         Console.WriteLine("Enter to return to Products menu");
         string? displayChoice = Console.ReadLine();
         Console.Clear();
-                logger.Info("Display Product option {displayChoice} selected", displayChoice);
+        logger.Info("Display Product option {displayChoice} selected", displayChoice);
 
-
+        if (displayChoice == "1") 
+        {
+            // Display all products
+            var db = new DataContext();
+            var products = db.Products.OrderBy(p => p.ProductName);
+            
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"{products.Count()} products returned");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            foreach (var product in products)
+            {
+                Console.WriteLine($"{product.ProductName}");
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+        else if (displayChoice == "2")
+        {
+            // Display all active products
+        }
+        else if (displayChoice == "3")
+        {
+            // Display all discontinued products
+        }
+        else if (String.IsNullOrEmpty(displayChoice))
+        {
+            // Return to Products menu
+        }
     }
     }
     else if (mainChoice == "3")
