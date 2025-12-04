@@ -400,6 +400,17 @@ do
         else if (displayChoice == "3")
         {
             // Display all discontinued products
+            var db = new DataContext();
+            var products = db.Products.Where(p => p.Discontinued).OrderBy(p => p.ProductName);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"{products.Count()} discontinued products returned");
+            Console.ForegroundColor = ConsoleColor.White;
+            foreach (var product in products)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"{product.ProductName} (Discontinued)");
+            }
+            Console.ForegroundColor = ConsoleColor.White;
         }
         else if (String.IsNullOrEmpty(displayChoice))
         {
