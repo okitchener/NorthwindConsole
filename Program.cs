@@ -129,6 +129,7 @@ do
         Console.WriteLine("Products Menu:");
         Console.WriteLine("1) Add Product");
         Console.WriteLine("2) Edit Product Record");
+        Console.WriteLine("3) Display products");
         Console.WriteLine("Enter to return to main menu");
         string? choice = Console.ReadLine();
         Console.Clear();
@@ -344,6 +345,20 @@ do
         }
     }
         }
+    }
+    else if (choice == "3")
+    {
+        //Future Display products
+        Console.WriteLine("What products do you wish the display?");
+        Console.WriteLine("1) Display all products");
+        Console.WriteLine("2) Display all active products");
+        Console.WriteLine("3) Display all discontinued products");
+        Console.WriteLine("Enter to return to Products menu");
+        string? displayChoice = Console.ReadLine();
+        Console.Clear();
+                logger.Info("Display Product option {displayChoice} selected", displayChoice);
+
+
     }
     }
     else if (mainChoice == "3")
