@@ -366,16 +366,36 @@ do
             
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"{products.Count()} products returned");
-            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.ForegroundColor = ConsoleColor.White;
             foreach (var product in products)
             {
-                Console.WriteLine($"{product.ProductName}");
+                if (product.Discontinued)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"{product.ProductName} (Discontinued)");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.WriteLine($"{product.ProductName} (Active)");
+                }
             }
             Console.ForegroundColor = ConsoleColor.White;
         }
         else if (displayChoice == "2")
         {
             // Display all active products
+            var db = new DataContext();
+            var products = db.Products.Where(p => !p.Discontinued).OrderBy(p => p.ProductName);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"{products.Count()} active products returned");
+            Console.ForegroundColor = ConsoleColor.White;
+            foreach (var product in products)
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine($"{product.ProductName} (Active)");
+            }
+            Console.ForegroundColor = ConsoleColor.White;
         }
         else if (displayChoice == "3")
         {
