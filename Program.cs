@@ -420,7 +420,18 @@ do
     }
     else if (choice == "4")
     {
-        // Future Display a Specific Product here
+        //choose a Specific Product to display
+        var db = new DataContext();
+        var products = db.Products.OrderBy(p => p.ProductId);
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        foreach (var p in products)
+        {
+            Console.WriteLine($"{p.ProductId}) {p.ProductName}");
+        }
+        Console.WriteLine("Enter the Product ID to display:");
+        int productId = int.Parse(Console.ReadLine()!);
+
+        
     }
     } 
     else if (mainChoice == "3")
