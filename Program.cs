@@ -520,18 +520,45 @@ do
     {
         // Delete submenu
         Console.WriteLine("Delete Menu:");
-        Console.WriteLine("Delete record from Products table");
-        Console.WriteLine("Delete record from Categories table");
+        Console.WriteLine("1) Delete record from Products table");
+        Console.WriteLine("2) Delete record from Categories table");
         string? deleteChoice = Console.ReadLine();
         Console.Clear();
-    }
     if (deleteChoice == "1")
     {
-        //Future delete product here 
+        // Delete product
+        Console.WriteLine("Select a product to delete:");
+        var db = new DataContext();
+        var products = db.Products.OrderBy(p => p.ProductId);
+        foreach (var p in products)
+        {
+            Console.WriteLine($"{p.ProductId}) {p.ProductName}");
+        } 
+        Console.Write("\nEnter Product ID: ");
+        int productId = int.Parse(Console.ReadLine()!);
+        // Find the product
+        Product? product = db.Products.FirstOrDefault(p => p.ProductId == productId);
+         if (product == null)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Product with ID {productId} not found.");
+            Console.ForegroundColor = ConsoleColor.White;
+            logger.Error($"Product with ID {productId} not found");
+        }
+        else
+        {
+            db.Products.Remove(product);
+            db.SaveChanges();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Product '{product.ProductName}' with ID {product.ProductId} deleted successfully.");
+            Console.ForegroundColor = ConsoleColor.White;
+            logger.Info($"Product '{product.ProductName}' with ID {product.ProductId} deleted successfully.");
+        }
     }
     else if (deleteChoice == "2")
     {
         //Future delete category here
+    }
     }
     else if (String.IsNullOrEmpty(mainChoice))
     {
