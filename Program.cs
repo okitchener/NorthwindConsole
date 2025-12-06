@@ -557,7 +557,34 @@ do
     }
     else if (deleteChoice == "2")
     {
-        //Future delete category here
+        // Delete category
+         Console.WriteLine("Select a category to delete:");
+        var db = new DataContext();
+        var categories = db.Categories.OrderBy(p => p.CategoryId);
+        foreach (var c in categories)
+        {
+            Console.WriteLine($"{c.CategoryId}) {c.CategoryName}");
+        } 
+        Console.Write("\nEnter Category ID: ");
+        int categoryId = int.Parse(Console.ReadLine()!);
+        // Find the category
+        Category? category = db.Categories.FirstOrDefault(c => c.CategoryId == categoryId);
+         if (category == null)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Category with ID {categoryId} not found.");
+            Console.ForegroundColor = ConsoleColor.White;
+            logger.Error($"Category with ID {categoryId} not found");
+        }
+        else
+        {
+            db.Categories.Remove(category);
+            db.SaveChanges();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Category '{category.CategoryName}' with ID {category.CategoryId} deleted successfully.");
+            Console.ForegroundColor = ConsoleColor.White;
+            logger.Info($"Category '{category.CategoryName}' with ID {category.CategoryId} deleted successfully.");
+        }
     }
     }
     else if (String.IsNullOrEmpty(mainChoice))
