@@ -520,10 +520,18 @@ do
     {
         // Delete submenu
         Console.WriteLine("Delete Menu:");
-        Console.WriteLine("(Delete options to be implemented)");
-        Console.WriteLine("Enter to return to main menu");
-        string? choice = Console.ReadLine();
+        Console.WriteLine("Delete record from Products table");
+        Console.WriteLine("Delete record from Categories table");
+        string? deleteChoice = Console.ReadLine();
         Console.Clear();
+    }
+    if (deleteChoice == "1")
+    {
+        //Future delete product here 
+    }
+    else if (deleteChoice == "2")
+    {
+        //Future delete category here
     }
     else if (String.IsNullOrEmpty(mainChoice))
     {
