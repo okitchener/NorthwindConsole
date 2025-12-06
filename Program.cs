@@ -112,13 +112,17 @@ do
         else if (choice == "4")
         {
             var db = new DataContext();
+            // Display all categories with only their active (non-discontinued) related products
             var query = db.Categories.Include("Products").OrderBy(p => p.CategoryId);
             foreach (var item in query)
             {
                 Console.WriteLine($"{item.CategoryName}");
                 foreach (Product p in item.Products)
                 {
-                    Console.WriteLine($"\t{p.ProductName}");
+                    if (!p.Discontinued)
+                    {
+                        Console.WriteLine($"\t{p.ProductName}");
+                    }
                 }
             }
         }
