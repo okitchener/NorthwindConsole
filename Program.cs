@@ -26,9 +26,10 @@ do
         // Categories submenu
         Console.WriteLine("Categories Menu:");
         Console.WriteLine("1) Display categories");
-        Console.WriteLine("2) Add category");
-        Console.WriteLine("3) Display Category and related products");
-        Console.WriteLine("4) Display all Categories and their related products");
+        Console.WriteLine("2) Edit category");
+        Console.WriteLine("3) Add category");
+        Console.WriteLine("4) Display Category and related products");
+        Console.WriteLine("5) Display all Categories and their related products");
         Console.WriteLine("Enter to return to main menu");
         string? choice = Console.ReadLine();
         Console.Clear();
@@ -53,6 +54,10 @@ do
             Console.ForegroundColor = ConsoleColor.White;
         }
         else if (choice == "2")
+        {
+            // Future Edit category here      
+        }
+        else if (choice == "3")
         {
             Category category = new();
             Console.WriteLine("Enter Category Name:");
@@ -87,7 +92,7 @@ do
                 }
             }
         }
-        else if (choice == "3")
+        else if (choice == "4")
         {
             var db = new DataContext();
             var query = db.Categories.OrderBy(p => p.CategoryId);
@@ -112,7 +117,7 @@ do
                 }
             }
         }
-        else if (choice == "4")
+        else if (choice == "5")
         {
             var db = new DataContext();
             // Display all categories with only their active (non-discontinued) related products
