@@ -55,7 +55,18 @@ do
         }
         else if (choice == "2")
         {
-            // Future Edit category here      
+            //  Edit category
+            Console.WriteLine("Select category to edit:");
+            //Display list of the categories
+            var db = new DataContext();
+            var query = db.Categories.OrderBy(p => p.CategoryName);
+            foreach (var item in query)
+            {
+                Console.WriteLine($"{item.CategoryId}) {item.CategoryName}");
+            }
+            Console.Write("\nEnter Category ID: ");
+        int categoryId = int.Parse(Console.ReadLine()!);
+
         }
         else if (choice == "3")
         {
