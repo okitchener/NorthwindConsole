@@ -66,7 +66,42 @@ do
             }
             Console.Write("\nEnter Category ID: ");
         int categoryId = int.Parse(Console.ReadLine()!);
+        // Find the category
+        Category? category = db.Categories.FirstOrDefault(c => c.CategoryId == categoryId);
+         if (category == null)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Category with ID {categoryId} not found.");
+            Console.ForegroundColor = ConsoleColor.White;
+            logger.Error($"Category with ID {categoryId} not found");
+        }
+        else
+        {
+            Console.Clear();
+            logger.Info($"Category {categoryId} - {category.CategoryName} selected for editing");
 
+            Console.WriteLine($"Current Category Name: {category.CategoryName}");
+            Console.Write("Enter new Category Name (or press Enter to keep current): ");
+            string? newName = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(newName))
+            {
+                category.CategoryName = newName;
+            }
+
+            Console.WriteLine($"Current Description: {category.Description}");
+            Console.Write("Enter new Description (or press Enter to keep current): ");
+            string? newDescription = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(newDescription))
+            {
+                category.Description = newDescription;
+            }
+
+            db.SaveChanges();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Category updated successfully!");
+            Console.ForegroundColor = ConsoleColor.White;
+            logger.Info($"Category {categoryId} updated successfully");
+        }
         }
         else if (choice == "3")
         {
@@ -92,7 +127,9 @@ do
                 else
                 {
                     logger.Info("Validation passed");
-                    // TODO: save category to db
+                    //save category to db
+                    db.Categories.Add(category);
+                    db.SaveChanges();
                 }
             }
             if (!isValid)
