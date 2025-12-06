@@ -547,12 +547,24 @@ do
         }
         else
         {
-            db.Products.Remove(product);
-            db.SaveChanges();
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Product '{product.ProductName}' with ID {product.ProductId} deleted successfully.");
-            Console.ForegroundColor = ConsoleColor.White;
-            logger.Info($"Product '{product.ProductName}' with ID {product.ProductId} deleted successfully.");
+            // Check for orphans - see if product exists in OrderDetails
+            if (db.OrderDetails.Any(od => od.ProductId == productId))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Cannot delete product '{product.ProductName}' - it has related order details.");
+                Console.WriteLine("This product has been ordered and cannot be deleted to preserve order history.");
+                Console.ForegroundColor = ConsoleColor.White;
+                logger.Error($"Cannot delete product {productId} - has related order details");
+            }
+            else
+            {
+                db.Products.Remove(product);
+                db.SaveChanges();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Product '{product.ProductName}' with ID {product.ProductId} deleted successfully.");
+                Console.ForegroundColor = ConsoleColor.White;
+                logger.Info($"Product '{product.ProductName}' with ID {product.ProductId} deleted successfully.");
+            }
         }
     }
     else if (deleteChoice == "2")
@@ -578,12 +590,24 @@ do
         }
         else
         {
-            db.Categories.Remove(category);
-            db.SaveChanges();
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Category '{category.CategoryName}' with ID {category.CategoryId} deleted successfully.");
-            Console.ForegroundColor = ConsoleColor.White;
-            logger.Info($"Category '{category.CategoryName}' with ID {category.CategoryId} deleted successfully.");
+            // Check for orphans - see if category has related products
+            if (db.Products.Any(p => p.CategoryId == categoryId))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Cannot delete category '{category.CategoryName}' - it has related products.");
+                Console.WriteLine("Please delete or reassign all products in this category first.");
+                Console.ForegroundColor = ConsoleColor.White;
+                logger.Error($"Cannot delete category {categoryId} - has related products");
+            }
+            else
+            {
+                db.Categories.Remove(category);
+                db.SaveChanges();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Category '{category.CategoryName}' with ID {category.CategoryId} deleted successfully.");
+                Console.ForegroundColor = ConsoleColor.White;
+                logger.Info($"Category '{category.CategoryName}' with ID {category.CategoryId} deleted successfully.");
+            }
         }
     }
     }
