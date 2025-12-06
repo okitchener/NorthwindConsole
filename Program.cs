@@ -106,7 +106,10 @@ do
             Console.WriteLine($"{category.CategoryName} - {category.Description}");
             foreach (Product p in category.Products)
             {
-                Console.WriteLine($"\t{p.ProductName}");
+                if (!p.Discontinued)
+                {
+                    Console.WriteLine($"\t{p.ProductName}");
+                }
             }
         }
         else if (choice == "4")
